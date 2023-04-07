@@ -31,13 +31,39 @@ func main() {
 	// }
 	// userService.RegisterUser(userInput)
 
+	// userByEmail, err := userRepository.FindByEmail("aa@emal.com")
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+	// if userByEmail.ID == 0 {
+	// 	fmt.Println("user tidak ditemukan")
+	// } else {
+	// 	fmt.Println(userByEmail.Name)
+	// }
+
+	// input := user.LoginInput{
+	// 	Email:    "aa@emal.com",
+	// 	Password: "passworda",
+	// }
+	// user, err := userService.Login(input)
+	// if err != nil {
+	// 	fmt.Println("terjadi kesalahan")
+	// 	fmt.Println(err.Error())
+	// }
+	// fmt.Println(user.Email)
+	// fmt.Println(user.Name)
+
+	// userService.SaveAvatar(1, "images/1-profile.png")
+
 	userHandler := handler.NewUserHandler(userService)
 
 	router := gin.Default()
-
 	api := router.Group("/api/v1")
 
 	api.POST("/users", userHandler.RegisterUser)
+	api.POST("/sessions", userHandler.Login)
+	api.POST("/email_checkers", userHandler.CheckEmailAvailability)
+	api.POST("/avatar", userHandler.UploadAvatar)
 
 	router.Run()
 
